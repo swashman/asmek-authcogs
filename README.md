@@ -11,7 +11,7 @@ A collection of cogs for use by ASMEK members and leadership.
 ### Current cogs
 Cog |  Purpose
 --- | ---
-`cog` | Cog Explanation
+`about` | about the authbot
 
 ## How to Install
 2. Configure your AA settings (`local.py`) as follows:
@@ -21,4 +21,4 @@ Cog |  Purpose
 ## Settings
 Setting | Default | Description
 --- | --- | ---
-`SETTING` | `DEFAULT ` | setting explanation
+`ASMEK_AUTH_COGS` | `ALL` | list of cogs to activate if differs from all
