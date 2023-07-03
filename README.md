@@ -13,12 +13,20 @@ Cog |  Purpose
 --- | ---
 `about` | about the authbot
 
-## How to Install
-2. Configure your AA settings (`local.py`) as follows:
-    - Add `'asmek-authcogs',` to 'INSTALLED_APPS'
-    - All below settings:
+### Planned cogs
+Cog |  Purpose
+--- | ---
+`auth` | links to various areas in the auth
+`links` | links to various useful sites, cuz we forget them all the time. Maybe with add/delete capability
+`admin` | useful commands for admin and hr, like force running a sync or other useful tasks
+`recruit` | thread based recruitment commands like solarmark
     
 ## Settings
 Setting | Default | Description
 --- | --- | ---
 `ASMEK_AUTH_COGS` | `ALL` | list of cogs to activate if differs from all
+
+## Permissions
+Perm | Codename | Description
+--- | --- | ---
+Can Do Something | do_someting | description of what this permission gives access to
