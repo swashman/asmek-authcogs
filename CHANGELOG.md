@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+-about command: basic command about auth bot
+-auth command:
+    -home
+    -alliance
+    -wiki
+    -buyback
+    -fittings
+    -character audit
+-links command:
+    -list
+
 ## [0.1.0] - 2023-07-02
 
 ### Added

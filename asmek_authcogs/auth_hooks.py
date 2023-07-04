@@ -7,4 +7,12 @@ from . import app_settings
 
 @hooks.register("discord_cogs_hook")
 def register_cogs():
-    return app_settings.ASMEK_AUTH_COGS
+    """
+    Registering our discord cogs
+    """
+
+    return [
+        "asmek_authcogs.cogs.about",
+        "asmek_authcogs.cogs.auth",
+        "asmek_authcogs.cogs.links",
+    ]

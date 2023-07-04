@@ -1,6 +1,7 @@
 """App Settings"""
 
 # Django
+from django.apps import apps
 from django.conf import settings
 
 # put your app settings here
@@ -8,11 +9,11 @@ from django.conf import settings
 
 EXAMPLE_SETTING_ONE = getattr(settings, "EXAMPLE_SETTING_ONE", None)
 
-# default cogs
-ASMEK_AUTH_COGS = getattr(
-    settings,
-    "DISCORD_BOT_COGS",
-    [
-        "asmek_authcogs.cogs.about",
-    ],
-)
+
+def fittings_installed() -> bool:
+    """
+    Check if fittings is installed
+    :return: bool
+    """
+
+    return apps.is_installed("fittings")

@@ -10,21 +10,25 @@ Alliance Auth cogs for Astrum Mechanica
 Cog |  Description
 --- | ---
 `about` | about the authbot
+`auth` | links to various areas in the auth
+`links` | links to various useful sites, cuz we forget them all the time.
 
 ## Planned cogs
 
 Cog |  Purpose
 --- | ---
-`auth` | links to various areas in the auth
-`links` | links to various useful sites, cuz we forget them all the time. Maybe with add/delete capability
+
 `admin` | useful commands for admin and hr, like force running a sync or other useful tasks
 `recruit` | thread based recruitment commands like solarmark
+`price check` | price check in trade hubs and null hubs
 
 ## Settings
 
 Setting | Default | Description
 --- | --- | ---
-`ASMEK_AUTH_COGS` | `ALL` | list of cogs to activate if differs from all
+`ASMEK_ALLIANCE_ID` |  | alliance id
+`ASMEK_ALLIANCE_NAME` |  | alliance name to display on embeds
+`ASMEK_ALLIANCE_URL` |  | URL for alliances auth system
 
 ## Permissions
 
