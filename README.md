@@ -17,7 +17,6 @@ Cog |  Description
 
 Cog |  Purpose
 --- | ---
-
 `admin` | useful commands for admin and hr, like force running a sync or other useful tasks
 `recruit` | thread based recruitment commands like solarmark
 `price check` | price check in trade hubs and null hubs
