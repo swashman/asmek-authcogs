@@ -20,7 +20,7 @@ class General(models.Model):
 
 class Link(models.Model):
     description = models.TextField(max_length=500)
-    name = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255, null=False, unique=True)
     url = models.CharField(max_length=255, null=False)
     thumbnail = models.CharField(max_length=255)
 

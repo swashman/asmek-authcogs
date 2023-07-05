@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+## [1.0.0] - 2023-07-04
+
+### Added
+
 -about command: basic command about auth bot
 -auth command:
     -home
@@ -19,6 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     -character audit
 -links command:
     -list
+    -add
+    -edit
+    -delete
+-link command: displays a chosen link
 
 ## [0.1.0] - 2023-07-02
 

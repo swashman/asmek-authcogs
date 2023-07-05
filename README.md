@@ -32,6 +32,6 @@ Setting | Default | Description
 
 ## Permissions
 
-Perm | Codename | Description
---- | --- | ---
-Can Do Something | do_someting | description of what this permission gives access to
+Perm | Description
+--- | ---
+ link.manage_links | Can manage links in the links cog
