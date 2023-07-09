@@ -158,7 +158,7 @@ class Links(commands.Cog):
             self.stop()
 
     @links_commands.command(name="list", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    # @sender_has_perm("link.manage_links")
+    @sender_has_perm("link.manage_links")
     async def list(self, ctx):
         """
         list all current links
@@ -170,9 +170,7 @@ class Links(commands.Cog):
         links = Link.objects.all()
         if links.count() > 0:
             for i in links:
-                embed.add_field(
-                    name=f"{i.name}: {i.description}", value=i.url, inline=False
-                )
+                embed.add_field(name=f"{i.name}", value=i.url, inline=False)
         else:
             embed.description = f"No Links added!"
 
@@ -192,7 +190,7 @@ class Links(commands.Cog):
         await ctx.send_modal(add_modal)
 
     @links_commands.command(name="edit", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    # @sender_has_perm("link.manage_links")
+    @sender_has_perm("link.manage_links")
     @option("name", description="Search for a Link!", autocomplete=search_links)
     async def edit(self, ctx, name: str):
         """
@@ -202,7 +200,7 @@ class Links(commands.Cog):
         await ctx.send_modal(edit_modal)
 
     @links_commands.command(name="delete", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    # @sender_has_perm("link.manage_links")
+    @sender_has_perm("link.manage_links")
     @option("name", description="Search for a Link!", autocomplete=search_links)
     async def delete(self, ctx, name: str):
         """
