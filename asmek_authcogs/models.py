@@ -15,7 +15,7 @@ class General(models.Model):
 
         managed = False
         default_permissions = ()
-        permissions = (("basic_access", "Basic access to this app"),)
+        permissions = (("basic_access", "Basic access to this app"),("siege_control", "Control siege colours"),)
 
 
 class Link(models.Model):
