@@ -1,14 +1,9 @@
 import logging
 
-from aadiscordbot.cogs.utils.decorators import has_any_perm, sender_has_perm
-from discord import File, AutocompleteContext, Embed, InputTextStyle, Interaction, option
-from discord.colour import Color
+from aadiscordbot.cogs.utils.decorators import sender_has_perm
 from discord.commands import SlashCommandGroup
-from discord.embeds import Embed
 from discord.ext import commands
-from discord.ui import InputText, Modal
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
@@ -28,14 +23,54 @@ class Siege(commands.Cog):
     )
     
     @siege_commands.command(name="green", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    @sender_has_perm("link.manage_links")
-    async def green(self, ctx):
+    #@sender_has_perm("general.siege_control")
+    async def green(self, ctx,*,msg=''):
         """
-        siege green
+        All Clear
         """
-        with open('my_image.png', 'rb') as f:
-            pic = File(f)
-        return await ctx.respond(file=pic)
+        if len(msg) == 0:
+            msg = 'SIEGE GREEN - Crab on!'
+        siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
+        await siege_channel.purge()
+        await siege_channel.send(' @here '+ msg + '\nhttps://media.discordapp.net/attachments/478100446238474282/671250121178218496/Green_w_Excav.gif')
+        return await ctx.respond("Siege status updated to GREEN", ephemeral=True)
+    
+    @siege_commands.command(name="amber", guild_ids=[int(settings.DISCORD_GUILD_ID)])
+    #@sender_has_perm("general.siege_control")
+    async def amber(self, ctx,*,msg=''):
+        """
+        Ratting caps should dock, rorqs max tank
+        """
+        if len(msg) == 0:
+            msg = 'SIEGE AMBER - Caps dock / Rorqs max tank!'
+        siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
+        await siege_channel.purge()
+        await siege_channel.send('@here '+ msg + '\nhttps://media.discordapp.net/attachments/726469660916318218/829165923436331039/unknown.png')
+        return await ctx.respond("Siege status updated to AMBER", ephemeral=True)
+    
+    @siege_commands.command(name="red", guild_ids=[int(settings.DISCORD_GUILD_ID)])
+    #@sender_has_perm("general.siege_control")
+    async def red(self, ctx):
+        """
+        Everyone should dock up
+        """
+        if len(msg) == 0:
+            msg = 'SIEGE RED - Delve is dangerous!'
+        siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
+        await siege_channel.purge()
+        await siege_channel.send('@here '+ msg + '\nhttps://media.discordapp.net/attachments/478100446238474282/671250121345728542/Red_Final.gif')
+        return await ctx.respond("Siege status updated to RED", ephemeral=True)
+    
+    @siege_commands.command(name="cta", guild_ids=[int(settings.DISCORD_GUILD_ID)])
+    #@sender_has_perm("general.siege_control")
+    async def red(self, ctx):
+        """
+        CTA dock up
+        """
+        siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
+        await siege_channel.purge()
+        await siege_channel.send('@here SIEGE RED - CTA IS MUST ATTEND! \nhttps://media.discordapp.net/attachments/478100446238474282/671250121345728542/Red_Final.gif')
+        return await ctx.respond("Siege status updated to RED/CTA", ephemeral=True)
     
 def setup(bot):
     bot.add_cog(Siege(bot))
