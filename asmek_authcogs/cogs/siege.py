@@ -33,6 +33,7 @@ class Siege(commands.Cog):
         siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
         await siege_channel.purge()
         await siege_channel.send(' @here '+ msg + '\nhttps://media.discordapp.net/attachments/478100446238474282/671250121178218496/Green_w_Excav.gif')
+        await siege_channel.edit(name = 'delve-status-💸')
         return await ctx.respond("Siege status updated to GREEN", ephemeral=True)
     
     @siege_commands.command(name="amber", guild_ids=[int(settings.DISCORD_GUILD_ID)])
@@ -46,11 +47,12 @@ class Siege(commands.Cog):
         siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
         await siege_channel.purge()
         await siege_channel.send('@here '+ msg + '\nhttps://media.discordapp.net/attachments/726469660916318218/829165923436331039/unknown.png')
+        await siege_channel.edit(name = 'delve-status-🟠')
         return await ctx.respond("Siege status updated to AMBER", ephemeral=True)
     
     @siege_commands.command(name="red", guild_ids=[int(settings.DISCORD_GUILD_ID)])
     @sender_has_perm("general.siege_control")
-    async def red(self, ctx):
+    async def red(self, ctx,*,msg=''):
         """
         Everyone should dock up
         """
@@ -59,18 +61,8 @@ class Siege(commands.Cog):
         siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
         await siege_channel.purge()
         await siege_channel.send('@here '+ msg + '\nhttps://media.discordapp.net/attachments/478100446238474282/671250121345728542/Red_Final.gif')
+        await siege_channel.edit(name = 'delve-status-🔴')
         return await ctx.respond("Siege status updated to RED", ephemeral=True)
-    
-    @siege_commands.command(name="cta", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    @sender_has_perm("general.siege_control")
-    async def red(self, ctx):
-        """
-        CTA dock up
-        """
-        siege_channel = self.bot.get_channel(int(settings.ASMEK_SIEGE_CHANNEL))
-        await siege_channel.purge()
-        await siege_channel.send('@here SIEGE RED - CTA IS MUST ATTEND! \nhttps://media.discordapp.net/attachments/478100446238474282/671250121345728542/Red_Final.gif')
-        return await ctx.respond("Siege status updated to RED/CTA", ephemeral=True)
-    
+        
 def setup(bot):
     bot.add_cog(Siege(bot))
