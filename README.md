@@ -28,9 +28,11 @@ Setting | Default | Description
 `ASMEK_ALLIANCE_ID` |  | alliance id
 `ASMEK_ALLIANCE_NAME` |  | alliance name to display on embeds
 `ASMEK_ALLIANCE_URL` |  | URL for alliances auth system
+`ASMEK_SIEGE_CHANNEL` |  | channel id for siege alerts
 
 ## Permissions
 
 Perm | Description
 --- | ---
  link.manage_links | Can manage links in the links cog
+ general.siege_control | Can use siege commands

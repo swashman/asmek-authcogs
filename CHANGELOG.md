@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+## [1.1.1] - 2023-07-31
+
+### Added
+
+-siege command
+    updates in alert image in a specific channel
+
 ## [1.0.0] - 2023-07-04
 
 ### Added
