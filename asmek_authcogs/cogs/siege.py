@@ -23,7 +23,7 @@ class Siege(commands.Cog):
     )
     
     @siege_commands.command(name="green", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    #@sender_has_perm("general.siege_control")
+    @sender_has_perm("general.siege_control")
     async def green(self, ctx,*,msg=''):
         """
         All Clear
@@ -36,7 +36,7 @@ class Siege(commands.Cog):
         return await ctx.respond("Siege status updated to GREEN", ephemeral=True)
     
     @siege_commands.command(name="amber", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    #@sender_has_perm("general.siege_control")
+    @sender_has_perm("general.siege_control")
     async def amber(self, ctx,*,msg=''):
         """
         Ratting caps should dock, rorqs max tank
@@ -49,7 +49,7 @@ class Siege(commands.Cog):
         return await ctx.respond("Siege status updated to AMBER", ephemeral=True)
     
     @siege_commands.command(name="red", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    #@sender_has_perm("general.siege_control")
+    @sender_has_perm("general.siege_control")
     async def red(self, ctx):
         """
         Everyone should dock up
@@ -62,7 +62,7 @@ class Siege(commands.Cog):
         return await ctx.respond("Siege status updated to RED", ephemeral=True)
     
     @siege_commands.command(name="cta", guild_ids=[int(settings.DISCORD_GUILD_ID)])
-    #@sender_has_perm("general.siege_control")
+    @sender_has_perm("general.siege_control")
     async def red(self, ctx):
         """
         CTA dock up
