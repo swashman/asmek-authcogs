@@ -16,4 +16,5 @@ def register_cogs():
         "asmek_authcogs.cogs.auth",
         "asmek_authcogs.cogs.links",
         "asmek_authcogs.cogs.siege",
+        "asmek_authcogs.cogs.recruit",
     ]
