@@ -7,7 +7,7 @@ Create your models in here
 from django.db import models
 
 
-class General(models.Model):
+class AuthCogs(models.Model):
     """Meta model for app permissions"""
 
     class Meta:
@@ -15,7 +15,10 @@ class General(models.Model):
 
         managed = False
         default_permissions = ()
-        permissions = (("basic_access", "Basic access to this app"),("siege_control", "Control siege colours"),)
+        permissions = (
+            ("basic_access", "Basic access to this app"),
+            ("siege_control", "Control siege colours"),
+        )
 
 
 class Link(models.Model):
