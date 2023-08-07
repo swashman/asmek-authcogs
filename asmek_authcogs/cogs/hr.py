@@ -1,11 +1,18 @@
+import asyncio
 import logging
 import re
 
 import discord
 from aadiscordbot.cogs.utils.decorators import has_any_perm, sender_has_perm
+from allianceauth.eveonline.models import EveCharacter
+from allianceauth.eveonline.tasks import update_character
+from allianceauth.services.modules.discord.tasks import update_groups, update_nickname
+from discord import AutocompleteContext, Embed, InputTextStyle, Interaction, option
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from securegroups.tasks import run_smart_groups
 
 logger = logging.getLogger(__name__)
 
@@ -15,8 +22,8 @@ if not hasattr(settings, "ASMEK_RECRUIT_CHANNEL"):
     raise ValueError("ASMEK_RECRUIT_CHANNEL is not defined.")
 if not hasattr(settings, "ASMEK_CORP_ROLEID"):
     raise ValueError("ASMEK_CORP_ROLEID is not defined.")
-if not hasattr(settings, "ASMEK_RECRUITER_ROLEID"):
-    raise ValueError("ASMEK_RECRUITER_ROLEID is not defined.")
+if not hasattr(settings, "ASMEK_HR_ROLEID"):
+    raise ValueError("ASMEK_HR_ROLEID is not defined.")
 if not hasattr(settings, "ASMEK_RECRUIT_MSG_1"):
     raise ValueError("ASMEK_RECRUIT_MSG_1 is not defined.")
 
@@ -31,11 +38,14 @@ async def msgcount():
 
 # Returns whether the reaction clicked on by a user in recruitment is valid
 async def valid_reaction(self, reaction, user):
+    logger.info(f"valid reaction check")
     if reaction.message.channel.name == "RCT-" + user.name:
         if reaction.emoji == "\N{White Heavy Check Mark}":
             async for user in reaction.users():
                 if user.id == self.bot.user.id:
+                    logger.info(f"reaction is valid!")
                     return True
+    logger.info(f"reaction is invalid")
     return False
 
 
@@ -57,9 +67,11 @@ class HR(commands.Cog):
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         if await valid_reaction(self, reaction, user):
+            logger.info("valid return")
             msg = re.sub("<.*?>", "{}", reaction.message.content)
             msgnum = await msgcount()
             for x in range(1, msgnum):
+                logger.info(f"cur x: " + str(x))
                 if msg == eval("settings.ASMEK_RECRUIT_MSG_{}".format(x)):
                     await reaction.message.clear_reactions()
                     messageinfo = await self.bot.get_channel(
@@ -106,12 +118,12 @@ class HR(commands.Cog):
     @commands.user_command(
         name="Recruit to corp", guild_ids=[int(settings.DISCORD_GUILD_ID)]
     )
-    @commands.has_role(int(settings.ASMEK_RECRUITER_ROLEID))
+    @commands.has_role(int(settings.ASMEK_HR_ROLEID))
     async def recruit_user(self, ctx, member: discord.Member):
         if await self.can_recruit(ctx, member):
             channel = self.bot.get_channel(int(settings.ASMEK_RECRUIT_CHANNEL))
             threadname = "RCT-" + member.name
-            recruitrole = ctx.guild.get_role(int(settings.ASMEK_RECRUITER_ROLEID))
+            recruitrole = ctx.guild.get_role(int(settings.ASMEK_HR_ROLEID))
             messagetext = settings.ASMEK_RECRUIT_MSG_1.format(
                 member.mention, recruitrole.mention
             )
@@ -123,24 +135,25 @@ class HR(commands.Cog):
             messageinfo = await self.bot.get_channel(threadinfo.id).send(messagetext)
             if await msgcount() > 1:
                 await messageinfo.add_reaction("\N{White Heavy Check Mark}")
-            if int(settings.ASMEK_RECRUITER_ROLEID) in ctx.author.roles:
+            if int(settings.ASMEK_HR_ROLEID) in ctx.author.roles:
                 await ctx.respond(
                     "Recruitment thread created: " + threadinfo.mention, ephemeral=True
                 )
             else:
                 await ctx.respond("Recruitment thread created!", ephemeral=True)
 
+    # slash command to recruit
     @hr_commands.command(
         name="recruit",
         description="Recruit for EVE. Use an @ mention to choose the user.",
         guild_ids=[int(settings.DISCORD_GUILD_ID)],
     )
-    @commands.has_role(int(settings.ASMEK_RECRUITER_ROLEID))
+    @commands.has_role(int(settings.ASMEK_HR_ROLEID))
     async def recruit(self, ctx, member: discord.Member):
         if await self.can_recruit(ctx, member):
             channel = self.bot.get_channel(int(settings.ASMEK_RECRUIT_CHANNEL))
             threadname = "RCT-" + member.name
-            recruitrole = ctx.guild.get_role(int(settings.ASMEK_RECRUITER_ROLEID))
+            recruitrole = ctx.guild.get_role(int(settings.ASMEK_HR_ROLEID))
             messagetext = settings.ASMEK_RECRUIT_MSG_1.format(
                 member.mention, recruitrole.mention
             )
@@ -149,16 +162,18 @@ class HR(commands.Cog):
                 auto_archive_duration=10080,
                 type=discord.ChannelType.private_thread,
             )
+
             messageinfo = await self.bot.get_channel(threadinfo.id).send(messagetext)
             if await msgcount() > 1:
                 await messageinfo.add_reaction("\N{White Heavy Check Mark}")
-            if int(settings.ASMEK_RECRUITER_ROLEID) in ctx.author.roles:
+            if int(settings.ASMEK_HR_ROLEID) in ctx.author.roles:
                 await ctx.respond(
                     "Recruitment thread created: " + threadinfo.mention, ephemeral=True
                 )
             else:
                 await ctx.respond("Recruitment thread created!", ephemeral=True)
 
+    # slash command for user to start own application
     @commands.slash_command(
         name="apply",
         description="Apply to corp",
@@ -169,7 +184,7 @@ class HR(commands.Cog):
         if await self.can_recruit(ctx, mem):
             channel = self.bot.get_channel(int(settings.ASMEK_RECRUIT_CHANNEL))
             threadname = "RCT-" + ctx.author.name
-            recruitrole = ctx.guild.get_role(int(settings.ASMEK_RECRUITER_ROLEID))
+            recruitrole = ctx.guild.get_role(int(settings.ASMEK_HR_ROLEID))
             messagetext = settings.ASMEK_RECRUIT_MSG_1.format(
                 ctx.author.mention, recruitrole.mention
             )
@@ -181,12 +196,68 @@ class HR(commands.Cog):
             messageinfo = await self.bot.get_channel(threadinfo.id).send(messagetext)
             if await msgcount() > 1:
                 await messageinfo.add_reaction("\N{White Heavy Check Mark}")
-            if int(settings.ASMEK_RECRUITER_ROLEID) in ctx.author.roles:
+            if int(settings.ASMEK_HR_ROLEID) in ctx.author.roles:
                 await ctx.respond(
                     "Recruitment thread created: " + threadinfo.mention, ephemeral=True
                 )
             else:
                 await ctx.respond("Recruitment thread created!", ephemeral=True)
+
+    async def search_characters(ctx: AutocompleteContext):
+        """Returns a list of colors that begin with the characters entered so far."""
+        return list(
+            EveCharacter.objects.filter(
+                character_name__icontains=ctx.value
+            ).values_list("character_name", flat=True)[:10]
+        )
+
+    # Sets up slash command for syncing all data of user
+    @hr_commands.command(
+        name="update_user",
+        description="updates user",
+        guild_ids=[int(settings.DISCORD_GUILD_ID)],
+    )
+    @commands.has_role(int(settings.ASMEK_HR_ROLEID))
+    @option(
+        "character",
+        description="Search for a Character!",
+        autocomplete=search_characters,
+    )
+    async def update_user(self, ctx, character: str):
+        """
+        Queue Update tasks for the character and all alts. Run compliant group
+        """
+        try:
+            char = EveCharacter.objects.get(character_name=character)
+            alts = (
+                char.character_ownership.user.character_ownerships.all()
+                .select_related("character")
+                .values_list("character__character_id", flat=True)
+            )
+            for c in alts:
+                update_character.delay(c)
+            await ctx.respond(
+                f"Sent tasks to update **{character}**'s Alts", ephemeral=True
+            )
+        except EveCharacter.DoesNotExist:
+            return await ctx.respond(
+                f"Character **{character}** does not exist in our Auth system",
+                ephemeral=True,
+            )
+        except ObjectDoesNotExist:
+            return await ctx.respond(
+                f"**{character}** is Unlinked unable to update characters",
+                ephemeral=True,
+            )
+
+        await asyncio.sleep(30)
+        try:
+            run_smart_groups()
+            return await ctx.respond(
+                f"Sent task to update secure groups", ephemeral=True
+            )
+        except:
+            return await ctx.respond(f"secure group update failed", ephemeral=True)
 
 
 def setup(bot):
