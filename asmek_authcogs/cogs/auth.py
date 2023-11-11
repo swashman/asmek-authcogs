@@ -15,15 +15,11 @@ from allianceauth.eveonline.evelinks.eveimageserver import alliance_logo_url
 
 
 class Auth(commands.Cog):
-    """
-    All about me!
-    """
-
     def __init__(self, bot):
         self.bot = bot
 
     auth_commands = SlashCommandGroup(
-        "auth", "Links for the ASMEK Auth", guild_ids=[int(settings.DISCORD_GUILD_ID)]
+        "auth", "Links for the Auth", guild_ids=[int(settings.DISCORD_GUILD_ID)]
     )
 
     # ASMEK Home
@@ -37,12 +33,16 @@ class Auth(commands.Cog):
         Returns a link to the Corp Auth Home
         """
 
-        embed = Embed(title="ASMEK Auth")
+        embed = Embed(title=settings.STIE_NAME + " Auth")
         if ctx.guild.icon:
             embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.colour = Color.blurple()
 
-        embed.description = "All Authentication functions for Astrum Mechanica are handled through our Auth."
+        embed.description = (
+            "All Authentication functions for "
+            + settings.STIE_NAME
+            + " are handled through our Auth."
+        )
 
         url = get_site_url()
 

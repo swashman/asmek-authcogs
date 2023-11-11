@@ -27,14 +27,14 @@ class About(commands.Cog):
         """
         All about a server
         """
-        embed = Embed(title="ASMEK AuthBot: The Omnisiah")
+        embed = Embed(title=settings.ASMEK_BOT_NAME)
 
         if ctx.guild.icon:
             embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.color = Color.blue()
         embed.description = "Some spooky description"
         embed.set_footer(
-            text="Developed by Aaron Kable, forked for Astrum Mechanica by Swashman Acami"
+            text="Developed by Aaron Kable, forked by [ASMEK]Swashman Acami"
         )
 
         members = ctx.guild.member_count
