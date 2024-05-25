@@ -1,18 +1,18 @@
 import logging
 
-from aadiscordbot.cogs.utils.decorators import has_any_perm, sender_has_perm
+from aadiscordbot.cogs.utils.decorators import sender_has_perm
 from discord import AutocompleteContext, Embed, InputTextStyle, Interaction, option
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
-from discord.embeds import Embed
 from discord.ext import commands
 from discord.ui import InputText, Modal
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-logger = logging.getLogger(__name__)
-
 from asmek_authcogs.models import Link
+
+logger = logging.getLogger(__name__)
 
 
 class Links(commands.Cog):
@@ -69,7 +69,7 @@ class Links(commands.Cog):
 
         async def callback(self, interaction: Interaction):
             try:
-                _l = Link.objects.create(
+                Link.objects.create(
                     name=self.children[0].value,
                     url=self.children[1].value,
                     description=self.children[2].value,
@@ -165,14 +165,14 @@ class Links(commands.Cog):
         """
         embed = Embed()
         embed.title = "All the links!!"
-        embed.description = f"A list of all links currently stored by the auth bot!"
+        embed.description = "A list of all links currently stored by the auth bot!"
         await ctx.defer(ephemeral=False)
         links = Link.objects.all()
         if links.count() > 0:
             for i in links:
                 embed.add_field(name=f"{i.name}", value=i.url, inline=False)
         else:
-            embed.description = f"No Links added!"
+            embed.description = "No Links added!"
 
         await ctx.respond(embed=embed, ephemeral=False)
 

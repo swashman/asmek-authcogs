@@ -1,17 +1,16 @@
 import logging
 
 from aadiscordbot.app_settings import get_site_url
-from aadiscordbot.cogs.utils.decorators import has_any_perm, sender_has_perm
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
 from discord.embeds import Embed
 from discord.ext import commands
+
 from django.conf import settings
 
-logger = logging.getLogger(__name__)
-
-# Alliance Auth
 from allianceauth.eveonline.evelinks.eveimageserver import alliance_logo_url
+
+logger = logging.getLogger(__name__)
 
 
 class Auth(commands.Cog):
@@ -156,7 +155,7 @@ class Auth(commands.Cog):
         description="Corp Buyback",
         guild_ids=[int(settings.DISCORD_GUILD_ID)],
     )
-    async def fittings(self, ctx):
+    async def buyback(self, ctx):
         """
         Returns a link to the Corp buyback page
         """

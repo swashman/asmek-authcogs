@@ -3,16 +3,16 @@ import logging
 import re
 
 import discord
-from aadiscordbot.cogs.utils.decorators import has_any_perm, sender_has_perm
-from allianceauth.eveonline.models import EveCharacter
-from allianceauth.eveonline.tasks import update_character
-from allianceauth.services.modules.discord.tasks import update_groups, update_nickname
-from discord import AutocompleteContext, Embed, InputTextStyle, Interaction, option
+from discord import AutocompleteContext, option
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
+from securegroups.tasks import run_smart_groups
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from securegroups.tasks import run_smart_groups
+
+from allianceauth.eveonline.models import EveCharacter
+from allianceauth.eveonline.tasks import update_character
 
 logger = logging.getLogger(__name__)
 
@@ -31,21 +31,21 @@ if not hasattr(settings, "ASMEK_RECRUIT_MSG_1"):
 # Returns the count of how many ASMEK_RECRUIT_MSG_# settings variables are available, assuming ASMEK_RECRUIT_MSG_1 will always exist
 async def msgcount():
     i = 0
-    while hasattr(settings, "ASMEK_RECRUIT_MSG_" + str((i + 1))):
+    while hasattr(settings, "ASMEK_RECRUIT_MSG_" + str(i + 1)):
         i += 1
     return i
 
 
 # Returns whether the reaction clicked on by a user in recruitment is valid
 async def valid_reaction(self, reaction, user):
-    logger.info(f"valid reaction check")
+    logger.info("valid reaction check")
     if reaction.message.channel.name == "RCT-" + user.name:
         if reaction.emoji == "\N{White Heavy Check Mark}":
             async for user in reaction.users():
                 if user.id == self.bot.user.id:
-                    logger.info(f"reaction is valid!")
+                    logger.info("reaction is valid!")
                     return True
-    logger.info(f"reaction is invalid")
+    logger.info("reaction is invalid")
     return False
 
 
@@ -71,12 +71,12 @@ class HR(commands.Cog):
             msg = re.sub("<.*?>", "{}", reaction.message.content)
             msgnum = await msgcount()
             for x in range(1, msgnum):
-                logger.info(f"cur x: " + str(x))
-                if msg == eval("settings.ASMEK_RECRUIT_MSG_{}".format(x)):
+                logger.info("cur x: " + str(x))
+                if msg == eval(f"settings.ASMEK_RECRUIT_MSG_{x}"):
                     await reaction.message.clear_reactions()
                     messageinfo = await self.bot.get_channel(
                         reaction.message.channel.id
-                    ).send(eval("settings.ASMEK_RECRUIT_MSG_{}".format(x + 1)))
+                    ).send(eval(f"settings.ASMEK_RECRUIT_MSG_{x + 1}"))
                     if x < (msgnum - 1):
                         await messageinfo.add_reaction("\N{White Heavy Check Mark}")
                     return
@@ -254,10 +254,10 @@ class HR(commands.Cog):
         try:
             run_smart_groups()
             return await ctx.respond(
-                f"Sent task to update secure groups", ephemeral=True
+                "Sent task to update secure groups", ephemeral=True
             )
-        except:
-            return await ctx.respond(f"secure group update failed", ephemeral=True)
+        except Exception:
+            return await ctx.respond("secure group update failed", ephemeral=True)
 
 
 def setup(bot):

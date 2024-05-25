@@ -1,34 +1,37 @@
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = [
+    "hatchling",
+]
 
 [project]
 name = "asmek-authcogs"
-dynamic = ["version"]
-description = 'ASMEK customized cogs for aa-discordbot'
+description = "ASMEK customized cogs for aa-discordbot"
 readme = "README.md"
-requires-python = ">=3.7"
-license = "GPL-3.0"
-keywords = []
-authors = [
-  { name = "AstrumMechanica", email = "astrummechanica@gmail.com" },
+keywords = [
 ]
+license = { file = "LICENSE" }
+authors = [{ name = "AstrumMechanica", email = "astrummechanica@gmail.com" }]
+requires-python = ">=3.7"
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = [
+    "version",
 ]
 dependencies = [
-  "allianceauth>=3",
-  "allianceauth-discordbot"
-  ]
-
+    "allianceauth>=3",
+    "allianceauth-discordbot",
+]
 [project.urls]
 Documentation = "https://github.com/AstrumMechanica/asmek-authcogs#readme"
 Issues = "https://github.com/AstrumMechanica/asmek-authcogs/issues"
@@ -41,13 +44,33 @@ path = "asmek_authcogs/__init__.py"
 profile = "black"
 multi_line_output = 3
 sections = [
-    "FUTURE",
-    "STDLIB",
-    "THIRDPARTY",
-    "DJANGO",
-    "ALLIANCEAUTH",
-    "FIRSTPARTY",
-    "LOCALFOLDER"
+  "FUTURE",
+  "STDLIB",
+  "THIRDPARTY",
+  "DJANGO",
+  "ALLIANCEAUTH",
+  "FIRSTPARTY",
+  "LOCALFOLDER",
 ]
 known_allianceauth = ["allianceauth", "app_utils"]
 known_django = ["django", "django_webtest", "esi", "eveuniverse"]
+skip_gitignore = true
+
+[tool.pylint.'MASTER']
+ignore-patterns = ["__init__.py", "auth_hooks.py", "apps.py", "admin.py"]
+ignore-paths = ["^.*/tests/.*$", "^.*/migrations/.*$"]
+
+[tool.pylint.'BASIC']
+good-names = ["i", "j", "k", "ex"]
+
+[tool.pylint.'FORMAT']
+max-line-length = 120
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+  "cyclic-import",
+  "fixme",
+  "import-outside-toplevel",
+  "imported-auth-user",
+  "too-few-public-methods",
+]

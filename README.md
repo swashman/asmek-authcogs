@@ -65,7 +65,7 @@ Accessed using `/about`
 - Add the below lines to your `local.py` settings file, adjusting for your usage.
 
 ```python
-ASMEK_BOT_NAME = "ASMEK Authbot: The Omnissiah" # name to show up in about 
+ASMEK_BOT_NAME = "ASMEK Authbot: The Omnissiah" # name to show up in about
 ASMEK_BOT_DESCRIPTION = "Some spooky watching you description" # description for about
 ```
 

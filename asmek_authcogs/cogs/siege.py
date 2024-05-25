@@ -3,6 +3,7 @@ import logging
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
+
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
