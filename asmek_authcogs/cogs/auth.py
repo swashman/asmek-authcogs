@@ -1,5 +1,3 @@
-import logging
-
 from aadiscordbot.app_settings import get_site_url
 from discord.colour import Color
 from discord.commands import SlashCommandGroup
@@ -9,8 +7,9 @@ from discord.ext import commands
 from django.conf import settings
 
 from allianceauth.eveonline.evelinks.eveimageserver import alliance_logo_url
+from allianceauth.services.hooks import get_extension_logger
 
-logger = logging.getLogger(__name__)
+logger = get_extension_logger(__name__)
 
 
 class Auth(commands.Cog):
@@ -31,15 +30,15 @@ class Auth(commands.Cog):
         """
         Returns a link to the Corp Auth Home
         """
-
-        embed = Embed(title=settings.STIE_NAME + " Auth")
+        logger.info("test message")
+        embed = Embed(title=settings.SITE_NAME + " Auth")
         if ctx.guild.icon:
             embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.colour = Color.blurple()
 
         embed.description = (
             "All Authentication functions for "
-            + settings.STIE_NAME
+            + settings.SITE_NAME
             + " are handled through our Auth."
         )
 

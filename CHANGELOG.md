@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+## [1.3.2] - 2024-10-03
+
+### Fixed
+
+-fixed misepelled setting for auth link
+
 ## [1.1.1] - 2023-07-31
 
 ### Added
