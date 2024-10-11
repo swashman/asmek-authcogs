@@ -1,5 +1,3 @@
-import logging
-
 from aadiscordbot.cogs.utils.decorators import sender_has_perm
 from discord import AutocompleteContext, Embed, InputTextStyle, Interaction, option
 from discord.colour import Color
@@ -10,9 +8,11 @@ from discord.ui import InputText, Modal
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
+from allianceauth.services.hooks import get_extension_logger
+
 from asmek_authcogs.models import Link
 
-logger = logging.getLogger(__name__)
+logger = get_extension_logger(__name__)
 
 
 class Links(commands.Cog):

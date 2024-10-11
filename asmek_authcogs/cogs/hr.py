@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import re
 
 import discord
@@ -13,8 +12,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.eveonline.tasks import update_character
+from allianceauth.services.hooks import get_extension_logger
 
-logger = logging.getLogger(__name__)
+logger = get_extension_logger(__name__)
 
 
 # Validation Checks - These values must be defined in server settings
