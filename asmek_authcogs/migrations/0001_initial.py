@@ -7,33 +7,48 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='General',
+            name="General",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'permissions': (('basic_access', 'Basic access to this app'),),
-                'managed': False,
-                'default_permissions': (),
+                "permissions": (("basic_access", "Basic access to this app"),),
+                "managed": False,
+                "default_permissions": (),
             },
         ),
         migrations.CreateModel(
-            name='Link',
+            name="Link",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.TextField(max_length=500)),
-                ('name', models.CharField(max_length=255)),
-                ('url', models.CharField(max_length=255)),
-                ('thumbnail', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.TextField(max_length=500)),
+                ("name", models.CharField(max_length=255)),
+                ("url", models.CharField(max_length=255)),
+                ("thumbnail", models.CharField(max_length=255)),
             ],
             options={
-                'permissions': (('manage_links', 'Can manage links'),),
-                'default_permissions': (),
+                "permissions": (("manage_links", "Can manage links"),),
+                "default_permissions": (),
             },
         ),
     ]

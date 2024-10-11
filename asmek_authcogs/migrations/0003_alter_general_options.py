@@ -6,12 +6,19 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('asmek_authcogs', '0002_alter_link_name'),
+        ("asmek_authcogs", "0002_alter_link_name"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='general',
-            options={'default_permissions': (), 'managed': False, 'permissions': (('basic_access', 'Basic access to this app'), ('siege_control', 'Control siege colours'))},
+            name="general",
+            options={
+                "default_permissions": (),
+                "managed": False,
+                "permissions": (
+                    ("basic_access", "Basic access to this app"),
+                    ("siege_control", "Control siege colours"),
+                ),
+            },
         ),
     ]

@@ -6,22 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('asmek_authcogs', '0003_alter_general_options'),
+        ("asmek_authcogs", "0003_alter_general_options"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AuthCogs',
+            name="AuthCogs",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'permissions': (('basic_access', 'Basic access to this app'), ('siege_control', 'Control siege colours')),
-                'managed': False,
-                'default_permissions': (),
+                "permissions": (
+                    ("basic_access", "Basic access to this app"),
+                    ("siege_control", "Control siege colours"),
+                ),
+                "managed": False,
+                "default_permissions": (),
             },
         ),
         migrations.DeleteModel(
-            name='General',
+            name="General",
         ),
     ]

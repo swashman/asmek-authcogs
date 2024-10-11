@@ -10,19 +10,19 @@ This will not work without <https://apps.allianceauth.org/apps/detail/allianceau
 
 ## Current cogs
 
-Cog |  Description
---- | ---
-`about` | about the authbot
-`auth` | links to various areas in the auth(*HARDCODED* to specific areas and some statements, should tie them to installed modules)
-`links` | links to various useful sites, cuz we forget them all the time.
-`hr` | thread based recuritment. Various commands to sync characters
-`siege` | region status alert indicator thing!
+| Cog     | Description                                                                                                                 |
+| ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `about` | about the authbot                                                                                                           |
+| `auth`  | links to various areas in the auth(*HARDCODED* to specific areas and some statements, should tie them to installed modules) |
+| `links` | links to various useful sites, cuz we forget them all the time.                                                             |
+| `hr`    | thread based recuritment. Various commands to sync characters                                                               |
+| `siege` | region status alert indicator thing!                                                                                        |
 
 ## Future cogs and features
 
-Cog |  Purpose
---- | ---
-`price check` | price check in trade hubs and null hubs. base discord bot cog only checks jita and amarr
+| Cog           | Purpose                                                                                  |
+| ------------- | ---------------------------------------------------------------------------------------- |
+| `price check` | price check in trade hubs and null hubs. base discord bot cog only checks jita and amarr |
 
 - Incorporate adming page access
 - move recruit messages to database
@@ -43,13 +43,12 @@ pip install asmek-authcogs
 ```python
 ## Settings for Asmek Authcogs
 ASMEK_AUTHCOGS_COGS = [
-    "asmek_authcogs.cogs.about", # make sure to remove the about cog from aadiscordbot if using this
+    "asmek_authcogs.cogs.about",  # make sure to remove the about cog from aadiscordbot if using this
     "asmek_authcogs.cogs.auth",
     "asmek_authcogs.cogs.links",
     "asmek_authcogs.cogs.siege",
     "asmek_authcogs.cogs.hr",
 ]
-
 ```
 
 - Run migrations `python manage.py migrate`
@@ -65,8 +64,8 @@ Accessed using `/about`
 - Add the below lines to your `local.py` settings file, adjusting for your usage.
 
 ```python
-ASMEK_BOT_NAME = "ASMEK Authbot: The Omnissiah" # name to show up in about
-ASMEK_BOT_DESCRIPTION = "Some spooky watching you description" # description for about
+ASMEK_BOT_NAME = "ASMEK Authbot: The Omnissiah"  # name to show up in about
+ASMEK_BOT_DESCRIPTION = "Some spooky watching you description"  # description for about
 ```
 
 All settings are currently hardcoded
@@ -84,11 +83,11 @@ ASMEK_ALLIANCE_URL = "alliance url"
 Those will create the link for `/auth alliance`
 Accessed using `/auth` followed by one of the below
 Hardcoded links:
-    Audit - Character audit (not member audit)
-    Buyback - The buyback module
-    Fittings - The fittings Module
-    Home - Do i really need to explain??
-    Wiki - The simplewiki module ( NOT WIKIJS)
+Audit - Character audit (not member audit)
+Buyback - The buyback module
+Fittings - The fittings Module
+Home - Do i really need to explain??
+Wiki - The simplewiki module ( NOT WIKIJS)
 
 > This cog still needs some work to make it more customizable and generate links based on individual setups
 
@@ -99,13 +98,13 @@ This cog conatins 2 seperate commands
 `/links` is used to manage links, and `/link` is used to display a link
 
 /Links
-    Add - you will be brought to a pop up to add a name, url, description, and optional image for a link
-    Edit - you will be brought to a popup to edit a link (current links will populate in menu)
-    Delete - you will be asked to delete a link (current links will populate in menu)
-    List - will list all current links
+Add - you will be brought to a pop up to add a name, url, description, and optional image for a link
+Edit - you will be brought to a popup to edit a link (current links will populate in menu)
+Delete - you will be asked to delete a link (current links will populate in menu)
+List - will list all current links
 
 /Link
-    will generate a list of all your links and upon making a selection will return the information
+will generate a list of all your links and upon making a selection will return the information
 
 ### HR Cog
 
@@ -114,8 +113,11 @@ Additional recruit messages are optional and technically unlimited.
 Messages below are what asmek uses as an example, a few points to note when modifying.
 
 - the 2 pairs of {} in msg 1 are mandatory. The first set is to ping the recruit, the second set is to ping the HR team, in order to pull them into the thread.
+
 - the messages must be enclosed in quotes ""
+
 - `\n` is used for line breaks
+
 - Discord formatting can be added
 
 - Add the below lines to your `local.py` settings file, adjusting for your usage.
@@ -136,7 +138,7 @@ ASMEK_RECRUIT_MSG_5 = "**Thank you for considering joining us and submitting you
 - Add the below lines to your `local.py` settings file, adjusting for your usage.
 
 ```python
-ASMEK_SIEGE_CHANNEL = "123" #channel for siege status
+ASMEK_SIEGE_CHANNEL = "123"  # channel for siege status
 ```
 
 - The channel used for this should have permission set for no typing only viewing. You might have to set this from server owner.
@@ -153,21 +155,21 @@ Recommended usage for imperium:
 
 ## Settings (local.py)
 
-Setting | Default | Description
---- | --- | ---
-`ASMEK_ALLIANCE_ID` |  | alliance id
-`ASMEK_ALLIANCE_NAME` |  | alliance name to display on embeds
-`ASMEK_ALLIANCE_URL` |  | URL for alliances auth system
-`ASMEK_SIEGE_CHANNEL` |  | Discord channel id for siege alerts
-`ASMEK_RECRUIT_CHANNEL` |  | Discord channel id for recruitment threads
-`ASMEK_CORP_ROLEID` |  | Discord Role id for corp members, this prevents members from trying to apply (Should preferably be the 'members' role)
-`ASMEK_HR_ROLEID` |  | Discord Role id for HR team, or the role to ping for recruits and also who can use the HR commands(not sure why i don't have the ability to use it tied to perms but meh)
-`ASMEK_RECRUIT_MSG_1` |  | The first message to send in the private thread. **REQUIRED**
-`ASMEK_RECRUIT_MSG_#` |  | Additional message to send upon clicking the check mark. Sequentially numbered.
+| Setting                 | Default | Description                                                                                                                                                               |
+| ----------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ASMEK_ALLIANCE_ID`     |         | alliance id                                                                                                                                                               |
+| `ASMEK_ALLIANCE_NAME`   |         | alliance name to display on embeds                                                                                                                                        |
+| `ASMEK_ALLIANCE_URL`    |         | URL for alliances auth system                                                                                                                                             |
+| `ASMEK_SIEGE_CHANNEL`   |         | Discord channel id for siege alerts                                                                                                                                       |
+| `ASMEK_RECRUIT_CHANNEL` |         | Discord channel id for recruitment threads                                                                                                                                |
+| `ASMEK_CORP_ROLEID`     |         | Discord Role id for corp members, this prevents members from trying to apply (Should preferably be the 'members' role)                                                    |
+| `ASMEK_HR_ROLEID`       |         | Discord Role id for HR team, or the role to ping for recruits and also who can use the HR commands(not sure why i don't have the ability to use it tied to perms but meh) |
+| `ASMEK_RECRUIT_MSG_1`   |         | The first message to send in the private thread. **REQUIRED**                                                                                                             |
+| `ASMEK_RECRUIT_MSG_#`   |         | Additional message to send upon clicking the check mark. Sequentially numbered.                                                                                           |
 
 ## Permissions
 
-Perm | Description
---- | ---
- link.manage_links | Can manage links in the links cog
- general.siege_control | Can use siege commands
+| Perm                  | Description                       |
+| --------------------- | --------------------------------- |
+| link.manage_links     | Can manage links in the links cog |
+| general.siege_control | Can use siege commands            |

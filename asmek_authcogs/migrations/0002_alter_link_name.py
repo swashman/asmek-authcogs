@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('asmek_authcogs', '0001_initial'),
+        ("asmek_authcogs", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='link',
-            name='name',
+            model_name="link",
+            name="name",
             field=models.CharField(max_length=255, unique=True),
         ),
     ]
