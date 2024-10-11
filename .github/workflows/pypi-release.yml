@@ -1,3 +1,9 @@
+name: Release to PyPI
+on:
+  release:
+    # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
+    types: [released, prereleased]
+    
 jobs:
   release-build:
     runs-on: ubuntu-latest
