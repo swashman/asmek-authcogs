@@ -4,6 +4,22 @@ requires = [ "hatchling" ]
 
 [project]
 name = "asmek-authcogs"
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dynamic = [ "version" ]
+dependencies = [ "allianceauth<5,>=4", "allianceauth-discordbot" ]
+urls.Documentation = "https://github.com/AstrumMechanica/asmek-authcogs#readme"
+urls.Issues = "https://github.com/AstrumMechanica/asmek-authcogs/issues"
+urls.Source = "https://github.com/AstrumMechanica/asmek-authcogs"
+
+[tool.hatch.version]
+name = "asmek-authcogs"
 description = "ASMEK customized cogs for aa-discordbot"
 readme = "README.md"
 keywords = [  ]
@@ -22,12 +38,6 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dynamic = [ "version" ]
-dependencies = [ "allianceauth>=3", "allianceauth-discordbot" ]
-urls.Documentation = "https://github.com/AstrumMechanica/asmek-authcogs#readme"
-urls.Issues = "https://github.com/AstrumMechanica/asmek-authcogs/issues"
-urls.Source = "https://github.com/AstrumMechanica/asmek-authcogs"
-
-[tool.hatch.version]
 path = "asmek_authcogs/__init__.py"
 
 [tool.isort]
