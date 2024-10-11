@@ -72,13 +72,19 @@ class HR(commands.Cog):
             msgnum = await msgcount()
             for x in range(1, msgnum):
                 logger.info("cur x: " + str(x))
-                if msg == eval(f"settings.ASMEK_RECRUIT_MSG_{x}"):
+                msg_value = getattr(settings, f"ASMEK_RECRUIT_MSG_{x}", None)
+                if msg == msg_value:
                     await reaction.message.clear_reactions()
-                    messageinfo = await self.bot.get_channel(
-                        reaction.message.channel.id
-                    ).send(eval(f"settings.ASMEK_RECRUIT_MSG_{x + 1}"))
-                    if x < (msgnum - 1):
-                        await messageinfo.add_reaction("\N{White Heavy Check Mark}")
+
+                    next_msg = getattr(settings, f"ASMEK_RECRUIT_MSG_{x + 1}", None)
+                    if next_msg:
+                        messageinfo = await self.bot.get_channel(
+                            reaction.message.channel.id
+                        ).send(next_msg)
+
+                        # Only add the reaction if x is less than the last message number
+                        if x < (msgnum - 1):
+                            await messageinfo.add_reaction("\N{White Heavy Check Mark}")
                     return
 
     # Checks to see whether a thread exists for the given user and returns the thread ID if so
