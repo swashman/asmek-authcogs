@@ -1,5 +1,3 @@
-import logging
-
 from aadiscordbot.app_settings import get_site_url
 from discord.colour import Color
 from discord.embeds import Embed
@@ -7,7 +5,9 @@ from discord.ext import commands
 
 from django.conf import settings
 
-logger = logging.getLogger(__name__)
+from allianceauth.services.hooks import get_extension_logger
+
+logger = get_extension_logger(__name__)
 
 
 class About(commands.Cog):
