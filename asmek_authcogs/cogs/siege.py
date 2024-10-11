@@ -38,7 +38,7 @@ class Siege(commands.Cog):
             + msg
             + "\nhttps://media.discordapp.net/attachments/478100446238474282/671250121178218496/Green_w_Excav.gif"
         )
-        await siege_channel.edit(name="delve-status-💸")
+        await siege_channel.edit(name="💸querious-status")
         return await ctx.respond("Siege status updated to GREEN", ephemeral=True)
 
     @siege_commands.command(name="amber", guild_ids=[int(settings.DISCORD_GUILD_ID)])
@@ -56,7 +56,7 @@ class Siege(commands.Cog):
             + msg
             + "\nhttps://media.discordapp.net/attachments/726469660916318218/829165923436331039/unknown.png"
         )
-        await siege_channel.edit(name="delve-status-🟠")
+        await siege_channel.edit(name="🟠querious-status")
         return await ctx.respond("Siege status updated to AMBER", ephemeral=True)
 
     @siege_commands.command(name="red", guild_ids=[int(settings.DISCORD_GUILD_ID)])
@@ -74,7 +74,7 @@ class Siege(commands.Cog):
             + msg
             + "\nhttps://media.discordapp.net/attachments/478100446238474282/671250121345728542/Red_Final.gif"
         )
-        await siege_channel.edit(name="delve-status-🔴")
+        await siege_channel.edit(name="🔴querious-status")
         return await ctx.respond("Siege status updated to RED", ephemeral=True)
 
 
