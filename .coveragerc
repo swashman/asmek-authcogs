@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = lawn_compliance
+source = asmek_authcogs
 
 [report]
 exclude_lines =
