@@ -67,35 +67,43 @@ class HR(commands.Cog):
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         if await valid_reaction(self, reaction, user):
-            logger.info("valid return")
-            msg = re.sub("<.*?>", "{}", reaction.message.content)
+            logger.info("Valid reaction detected")
+
+            # Retrieve and normalize message content
+            msg = re.sub("<.*?>", "{}", reaction.message.content).strip().lower()
+            logger.info(f"Normalized message from reaction: {msg}")
+
             msgnum = await msgcount()
 
             for x in range(1, msgnum):
-                logger.info(f"cur x: {x}")
                 msg_value = getattr(settings, f"ASMEK_RECRUIT_MSG_{x}", None)
-                logger.info(f"Checking msg_value for x={x}: {msg_value}")
+                if msg_value:
+                    # Normalize msg_value for comparison
+                    normalized_msg_value = msg_value.strip().lower()
+                    logger.info(
+                        f"Checking against msg_value for x={x}: {normalized_msg_value}"
+                    )
 
-                if msg == msg_value:
-                    await reaction.message.clear_reactions()
-                    logger.info("Message matched, reactions cleared")
+                    if msg == normalized_msg_value:
+                        await reaction.message.clear_reactions()
+                        logger.info("Message matched, reactions cleared")
 
-                    next_msg = getattr(settings, f"ASMEK_RECRUIT_MSG_{x + 1}", None)
-                    logger.info(f"Next message for x+1={x+1}: {next_msg}")
+                        next_msg = getattr(settings, f"ASMEK_RECRUIT_MSG_{x + 1}", None)
+                        if next_msg:
+                            messageinfo = await self.bot.get_channel(
+                                reaction.message.channel.id
+                            ).send(next_msg)
+                            logger.info("Next message sent")
 
-                    if next_msg:
-                        messageinfo = await self.bot.get_channel(
-                            reaction.message.channel.id
-                        ).send(next_msg)
-                        logger.info("Next message sent")
-
-                        # Only add the reaction if x is less than the last message number
-                        if x < (msgnum - 1):
-                            await messageinfo.add_reaction("\N{White Heavy Check Mark}")
-                            logger.info("Reaction added to the next message")
-                    else:
-                        logger.info("No next message found, ending loop")
-                    return
+                            # Only add the reaction if x is less than the last message number
+                            if x < (msgnum - 1):
+                                await messageinfo.add_reaction(
+                                    "\N{White Heavy Check Mark}"
+                                )
+                                logger.info("Reaction added to the next message")
+                        else:
+                            logger.info("No next message found, ending loop")
+                        return
             logger.info("No match found for the current message")
 
     # Checks to see whether a thread exists for the given user and returns the thread ID if so
