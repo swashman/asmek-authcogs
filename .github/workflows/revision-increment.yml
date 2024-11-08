@@ -42,6 +42,9 @@ jobs:
           # Update the version in __init__.py
           sed -i "s/__version__ = .*/__version__ = \"$new_version\"/" $version_file
 
+          # Set the new version as an output
+          echo "::set-output name=new_version::$new_version"
+
       - name: Commit and push new version
         run: |
           git config --global user.name "github-actions[bot]"
