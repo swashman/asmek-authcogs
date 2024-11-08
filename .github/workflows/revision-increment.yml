@@ -21,7 +21,7 @@ jobs:
       - name: Increment version
         id: version
         run: |
-          version_file="path/to/your/package/__init__.py"
+          version_file="__init__.py"
           current_version=$(grep -Po '(?<=__version__ = ")(\d+\.\d+\.)(\d+)(?=")' $version_file)
           major_minor=$(echo $current_version | grep -Po '(\d+\.\d+\.?)')
           revision=$(echo $current_version | grep -Po '(\d+)$')
