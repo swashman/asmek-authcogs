@@ -69,8 +69,8 @@ class HR(commands.Cog):
         if await valid_reaction(self, reaction, user):
             logger.info("Valid reaction detected")
 
-            # Retrieve and normalize message content
-            msg = re.sub("<.*?>", "{}", reaction.message.content).strip().lower()
+            # Replace any content within <...> with {}
+            msg = re.sub(r"<.*?>", "{}", reaction.message.content).strip().lower()
             logger.info(f"Normalized message from reaction: {msg}")
 
             msgnum = await msgcount()
@@ -78,10 +78,12 @@ class HR(commands.Cog):
             for x in range(1, msgnum):
                 msg_value = getattr(settings, f"ASMEK_RECRUIT_MSG_{x}", None)
                 if msg_value:
-                    # Normalize msg_value for comparison
-                    normalized_msg_value = msg_value.strip().lower()
+                    # Apply the same replacement to msg_value
+                    normalized_msg_value = (
+                        re.sub(r"<.*?>", "{}", msg_value).strip().lower()
+                    )
                     logger.info(
-                        f"Checking against msg_value for x={x}: {normalized_msg_value}"
+                        f"Checking against normalized msg_value for x={x}: {normalized_msg_value}"
                     )
 
                     if msg == normalized_msg_value:
