@@ -18,6 +18,7 @@ on:
 jobs:
   # pre-commit Checks
   pre-commit:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"  # Skip if the commit message contains [skip ci]
     name: Pre Commit Checks
     runs-on: ubuntu-latest
 
@@ -35,6 +36,7 @@ jobs:
 
   # Run Test Coverage
   test-coverage:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"  # Skip if the commit message contains [skip ci]
     needs: [ pre-commit ]
     name: Test Coverage (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
@@ -73,28 +75,9 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -v
 
-#      - name: Upload Coverage
-#        if: ${{
-#              (
-#                github.event_name == 'pull_request'
-#                || (
-#                  github.event_name == 'push'
-#                  && github.ref == 'refs/heads/master'
-#                )
-#              )
-#              && matrix.python-version == '3.12'
-#            }}
-#        uses: codecov/codecov-action@v3
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-#          files: coverage.xml # optional
-##          flags: unittests # optional
-##          name: codecov-umbrella # optional
-##          fail_ci_if_error: true # optional (default = false)
-#          verbose: true # optional (default = false)
-
   # Pypi Build Test
   pypi-build-test:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"  # Skip if the commit message contains [skip ci]
     needs: [ test-coverage ]
     name: PyPi Build Test
     runs-on: ubuntu-latest
