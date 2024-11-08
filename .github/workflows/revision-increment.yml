@@ -3,7 +3,7 @@ name: Auto Increment Version
 on:
   push:
     branches:
-      - master  # Replace 'main' with your default branch if different
+      - master  # Replace 'main' with your default branch if differen
 
 jobs:
   increment_version:
