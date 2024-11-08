@@ -2,7 +2,7 @@ name: Tests
 
 on:
   workflow_run:
-    workflows: ["Auto Increment Version"]  # Ensures this runs after Version Incremen
+    workflows: ["Auto Increment Version"]  # Ensures this runs after Version Increment
     types:
       - completed
 
