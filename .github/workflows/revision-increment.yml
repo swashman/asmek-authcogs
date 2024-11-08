@@ -50,8 +50,9 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git status  # To confirm the path of modified files
+          git pull --rebase  # Pull latest changes and reapply the incremented version on top
           git add .  # Stage all changes (you can replace '.' with the exact path if needed)
           git commit -m "Incremented version to ${{ steps.version.outputs.new_version }}"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OWNER/REPO.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
