@@ -70,22 +70,33 @@ class HR(commands.Cog):
             logger.info("valid return")
             msg = re.sub("<.*?>", "{}", reaction.message.content)
             msgnum = await msgcount()
+
             for x in range(1, msgnum):
-                logger.info("cur x: " + str(x))
+                logger.info(f"cur x: {x}")
                 msg_value = getattr(settings, f"ASMEK_RECRUIT_MSG_{x}", None)
+                logger.info(f"Checking msg_value for x={x}: {msg_value}")
+
                 if msg == msg_value:
                     await reaction.message.clear_reactions()
+                    logger.info("Message matched, reactions cleared")
 
                     next_msg = getattr(settings, f"ASMEK_RECRUIT_MSG_{x + 1}", None)
+                    logger.info(f"Next message for x+1={x+1}: {next_msg}")
+
                     if next_msg:
                         messageinfo = await self.bot.get_channel(
                             reaction.message.channel.id
                         ).send(next_msg)
+                        logger.info("Next message sent")
 
                         # Only add the reaction if x is less than the last message number
                         if x < (msgnum - 1):
                             await messageinfo.add_reaction("\N{White Heavy Check Mark}")
+                            logger.info("Reaction added to the next message")
+                    else:
+                        logger.info("No next message found, ending loop")
                     return
+            logger.info("No match found for the current message")
 
     # Checks to see whether a thread exists for the given user and returns the thread ID if so
     async def thread_exist(self, member):
